@@ -1,15 +1,19 @@
 
-img_ori = imread('mountains.jpeg');
-%img = im2double(img);
+% img_ori = imread('mountains.jpeg');
+% %img = im2double(img);
+% img = rgb2gray(img_ori);
+office = load('data/office1.mat');
+office = office.pcl_train;
+img_ori = imag2d(office{1}.Color);
 img = rgb2gray(img_ori);
 k = 2^(1/3);
 counter=1;
 
 sigma = 0.5;
-n=30;
+n=10;
 
-%[extreme_index, DoG] = extrema_points(img,sigma, n , k);
-[extreme_index, DoG, L] = extrema_points_new(img, sigma, n, k);
+[extreme_index, DoG] = extrema_points(img,sigma, n , k);
+%[extreme_index, DoG, L] = extrema_points_new(img, sigma, n, k);
 
 
 close all;
