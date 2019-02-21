@@ -65,7 +65,7 @@ H = centered_1'* centered_2; % 3x3 Matrix
 [U, ~, V] = svd(H); 
 
 est_Rotation = V*U';
-est_Translation = [centroid_2' - est_Rotation*centroid_1'];
+est_Translation = centroid_2' - est_Rotation*centroid_1';
 
 
 %% Evaluate new Pc for RANSAC

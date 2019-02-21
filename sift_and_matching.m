@@ -1,3 +1,5 @@
+run('../vlfeat-0.9.21/toolbox/vl_setup.m');
+
 office = load('data/office1.mat');
 office = office.pcl_train;
 
