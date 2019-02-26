@@ -1,4 +1,4 @@
-function [final_mask_bin] = task3_1(pc, removeBob)
+function [final_mask_bin, pc_cleared] = clear_noise(pc, removeBob)
 %TASK3_1 Summary of this function goes here
 
 
@@ -74,5 +74,15 @@ t4_mask_bin(1:num_pixel, 1:end) = 0;
 t4_mask_bin(end-num_pixel+1:end, 1:end) = 0;
 t4_mask_bin = bsxfun(@times, final_mask_bin, cast(t4_mask_bin, 'like', final_mask_bin));
 final_mask_bin = t4_mask_bin;
+
+%% Output cleared pc
+indx_xyz_no = find(final_mask_bin==0);
+xyz_pc_temp = ori_loc;
+color_pc_temp = ori_color;
+
+xyz_pc_temp(indx_xyz_no, :) = [];
+color_pc_temp(indx_xyz_no, :) = [];
+
+pc_cleared = pointCloud(xyz_pc_temp, 'Color', color_pc_temp);
 end
 
