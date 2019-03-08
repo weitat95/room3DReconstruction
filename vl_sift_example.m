@@ -14,7 +14,7 @@ figure(1)
 image(img_ori);
 h1 = vl_plotframe(f) ;
 set(h1,'color','k','linewidth',3) ;
-
+ 
 figure(2)
 image(img_ori);
 h2 = vl_plotframe(f) ;
