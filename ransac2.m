@@ -81,7 +81,12 @@ end
 improvement_since = 0 ;
 last_min_error = 9999999999 ;
 threshold = 0.01 ;
-while improvement_since < 6
+euclidean_thres = 0.01;
+inlier_thres = 0.35;
+
+not_enough_points = true;
+max_inlier_counts = 0;
+while not_enough_points
     
 n = 15; % select 15 random points
 perm = randperm(size(sp_3d_1,1));
@@ -127,19 +132,30 @@ est_Translation = centroid_2' - est_Rotation*centroid_1';
 %% Evaluate new Pc for RANSAC
 sp_3d_1_validation_estimate = (est_Rotation*sp_3d_1_validation'+est_Translation)';
 
+euc_dist = sqrt(sum(power(sp_3d_1_validation_estimate-sp_3d_2_validation,2),2));
 error = sqrt(sum(sum(power(sp_3d_1_validation_estimate-sp_3d_2_validation,2),2)));
 
-    if (error < last_min_error - threshold) 
-        improvement_since=0;
-        last_min_error = error;
-        best_est_Rotation = est_Rotation;
-        best_est_Translation = est_Translation;
-    else
-        %no improvement
-        improvement_since = improvement_since + 1;
-    end
+inlier_count = sum(euc_dist <= euclidean_thres);
+not_enough_points = inlier_count < length(sp_3d_1_validation_estimate)*inlier_thres;
+
+
+if inlier_count > max_inlier_counts 
+    max_inlier_counts = inlier_count;
+    max_inlier_counts
+    best_est_Rotation = est_Rotation;
+    best_est_Translation = est_Translation;
 end
-last_min_error
+%     if (error < last_min_error - threshold) 
+%         improvement_since=0;
+%         last_min_error = error;
+%         best_est_Rotation = est_Rotation;
+%         best_est_Translation = est_Translation;
+%     else
+%         %no improvement
+%         improvement_since = improvement_since + 1;
+%     end
+end
+error
 
 
 

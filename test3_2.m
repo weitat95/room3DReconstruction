@@ -6,15 +6,16 @@ run('../vlfeat-0.9.21/toolbox/vl_setup.m');
 office = load('data/office1.mat');
 office = office.pcl_train;
 
-Translation_array= {};
+Translation_array= {} ;
 Rotation_array= {} ;
 ICP_array = {} ;
+Tform_array = {} ;
 for i = 1:length(office)-1 % Reading the 40 point-clouds
     i
     pc2 = office{i};
     pc1 = office{i+1};
     removeBob = false;
-    if i ==26
+    if i ==27
         removeBob = true;
     end
     [~, pc1_cleared] = clear_noise(pc1, removeBob);
@@ -22,7 +23,7 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     [best_est_Translation,  best_est_Rotation, error] = pose_estimation(pc1, pc2, true, false);
     Translation_array{end+1} = best_est_Translation;
     Rotation_array{end+1} = best_est_Rotation;
-    
+    Tform_array{end+1} = affine3d(horzcat(horzcat(best_est_Rotation, best_est_Translation)',[0 ;0 ;0 ;1]));
     error
     
     %% Visualise Best Pose Estimation 

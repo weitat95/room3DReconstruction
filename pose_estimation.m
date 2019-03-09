@@ -27,8 +27,8 @@ xy_1(:,1) = int32(f1(2,(matches(1,:))))';
 xy_2(:,2) = int32(f2(1,(matches(2,:))))';
 xy_2(:,1) = int32(f2(2,(matches(2,:))))';
 
-sp_3d_1 = sift_points_3d(xyz_1, xy_1);
-sp_3d_2 = sift_points_3d(xyz_2, xy_2);
+%sp_3d_1 = sift_points_3d(xyz_1, xy_1);
+%sp_3d_2 = sift_points_3d(xyz_2, xy_2);
 
 if clearNoise==true 
     [bin_mask_1, pc1_cleared] = clear_noise(pc1, removeBob);
@@ -39,7 +39,7 @@ if clearNoise==true
     counter=0;
     for i=1:length(xy_1)
 
-        if(sum(sum(xy_1(i,:) == [r1,c1],2)==2)~=0)
+        if(sum(sum(xy_1(i,:) == [c1,r1],2)==2)~=0)
             counter = counter+1;
             xy_1(i,:)=[-1,-1];
             xy_2(i,:)=[-1,-1];
@@ -47,7 +47,7 @@ if clearNoise==true
 
     end
     for i=1:length(xy_2)
-        if(sum(sum(xy_2(i,:) == [r2,c2],2)==2)~=0)
+        if(sum(sum(xy_2(i,:) == [c2,r2],2)==2)~=0)
             counter = counter+1;
             xy_2(i,:)=[-1, -1];
             xy_1(i,:)=[-1, -1];
@@ -81,8 +81,14 @@ end
 improvement_since = 0 ;
 last_min_error = 9999999999 ;
 threshold = 0.01 ;
+euclidean_thres = 0.01;
+inlier_thres = 0.35;
 
-while improvement_since < 6
+not_enough_points = true;
+max_inlier_counts = 0;
+limit_loop = 10000;
+n = 0;
+while not_enough_points && n < limit_loop
     
 n = 15; % select 15 random points
 perm = randperm(size(sp_3d_1,1));
@@ -128,18 +134,31 @@ est_Translation = centroid_2' - est_Rotation*centroid_1';
 %% Evaluate new Pc for RANSAC
 sp_3d_1_validation_estimate = (est_Rotation*sp_3d_1_validation'+est_Translation)';
 
+euc_dist = sqrt(sum(power(sp_3d_1_validation_estimate-sp_3d_2_validation,2),2));
 error = sqrt(sum(sum(power(sp_3d_1_validation_estimate-sp_3d_2_validation,2),2)));
 
-    if (error < last_min_error - threshold) 
-        improvement_since=0;
-        last_min_error = error;
-        best_est_Rotation = est_Rotation;
-        best_est_Translation = est_Translation;
-    else
-        %no improvement
-        improvement_since = improvement_since + 1;
-    end
+inlier_count = sum(euc_dist <= euclidean_thres);
+not_enough_points = inlier_count < length(sp_3d_1_validation_estimate)*inlier_thres;
+
+
+if inlier_count > max_inlier_counts 
+    max_inlier_counts = inlier_count;
+    max_inlier_counts
+    best_est_Rotation = est_Rotation;
+    best_est_Translation = est_Translation;
 end
+%     if (error < last_min_error - threshold) 
+%         improvement_since=0;
+%         last_min_error = error;
+%         best_est_Rotation = est_Rotation;
+%         best_est_Translation = est_Translation;
+%     else
+%         %no improvement
+%         improvement_since = improvement_since + 1;
+%     end
+end
+last_min_error = error;
+
 est_translation = best_est_Translation;
 est_rotation = best_est_Rotation;
 
@@ -153,6 +172,6 @@ est_rotation = best_est_Rotation;
 % subplot(1,2,1), pcshow(pc1), hold on, pcshow(pc2);
 % subplot(1,2,2), pcshow(new_pc), hold on, pcshow(pc2);
 % 
- 
+ n = n + 1;
 end
 
