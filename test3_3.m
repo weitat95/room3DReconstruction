@@ -62,6 +62,11 @@ pcshow(final_pc);
 % 
 
 
+for i = 1:length(merged_set)
+    close all;
+    pcshow(merged_set{i});
+    pause;
+end
 
 
 

@@ -78,18 +78,19 @@ if clearNoise==true
 end
 
 %% Ransac
-EUCLIDEAN_THRESH = 0.001;
-INLIER_THRESH = 0.35;
-LIMIT_LOOP = 100;
-MIN_INLIER_COUNT = 100;
-
-
+improvement_since = 0 ;
 last_min_error = 9999999999 ;
+threshold = 0.01 ;
+euclidean_thres = 0.04;
+inlier_thres = 0.35;
+
 not_enough_points = true;
 max_inlier_counts = 0;
+limit_loop = 100;
 non_improvement_counter = 0;
-moving_euc_thres = EUCLIDEAN_THRESH;
-while not_enough_points && non_improvement_counter < LIMIT_LOOP
+
+
+while not_enough_points && non_improvement_counter < limit_loop
     
 n = 15; % select 15 random points
 perm = randperm(size(sp_3d_1,1));
@@ -122,9 +123,9 @@ sp_3d_1_validation_estimate = (est_Rotation*sp_3d_1_validation'+est_Translation)
 euc_dist = sqrt(sum(power(sp_3d_1_validation_estimate-sp_3d_2_validation,2),2));
 error = sqrt(sum(sum(power(sp_3d_1_validation_estimate-sp_3d_2_validation,2),2)));
 
-inlier_index = euc_dist <= moving_euc_thres;
+inlier_index = euc_dist <= euclidean_thres;
 inlier_count = sum(inlier_index);
-not_enough_points = inlier_count < length(sp_3d_1_validation_estimate)*INLIER_THRESH;
+not_enough_points = inlier_count < length(sp_3d_1_validation_estimate)*inlier_thres;
 
 
 if inlier_count > max_inlier_counts 
@@ -143,14 +144,11 @@ end
 %         improvement_since = improvement_since + 1;
 %     end
 non_improvement_counter = non_improvement_counter + 1;
-%non_improvement_counter
-if non_improvement_counter >= LIMIT_LOOP && max_inlier_counts < MIN_INLIER_COUNT
-    moving_euc_thres = moving_euc_thres*2;
-    not_enough_points = true;
-    max_inlier_counts = 0;
-    non_improvement_counter = 0;
-    moving_euc_thres
-end
+display(non_improvement_counter);
+
+if non_improvement_counter >= limit_loop && max_inlier_counts < 4
+    
+    
 end
 last_min_error = error;
 
