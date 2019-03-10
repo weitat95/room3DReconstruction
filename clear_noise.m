@@ -51,28 +51,29 @@ end
 % Hyperparameter
 K = 100;
 DIST_THRESH = 0.02;
-INLIER_THRESH = 10;
+INLIER_THRESH = 22;
 color_pc_3 = ori_color;
 xyz_pc_3 = ori_loc;
 
 indx_xyz_no = [];
-for i = 1 : length(xyz_pc_3)
-    i
-    if (isnan(xyz_pc_3(i,1)))
-       continue; 
-    end
-    [ ~, nearest_dist ] =findNearestNeighbors(pc, xyz_pc_3(i,:), K); 
-    if (sum(nearest_dist<DIST_THRESH) < INLIER_THRESH)
-        indx_xyz_no = [indx_xyz_no ; i];
-    end
-end
-% num_neighbors = 2; % number of neighbors to be inlier (not flying pixels)
-% std_dev_thresh = 1.5; % Standard deviation to be considered inliers
-% 
-% color_pc_3 = ori_color;
-% xyz_pc_3 = ori_loc;
-% 
-% [~, indx_xyz_yes, indx_xyz_no] = pcdenoise(pc,'NumNeighbors',num_neighbors, 'Threshold', std_dev_thresh);
+% for i = 1 : length(xyz_pc_3)
+%     i
+%     if (isnan(xyz_pc_3(i,1)))
+%        continue; 
+%     end
+%     [ ~, nearest_dist ] =findNearestNeighbors(pc, xyz_pc_3(i,:), K); 
+%     if (sum(nearest_dist<DIST_THRESH) < INLIER_THRESH)
+%         indx_xyz_no = [indx_xyz_no ; i];
+%     end
+% end
+
+num_neighbors = 100; % number of neighbors to be inlier (not flying pixels)
+std_dev_thresh = 0.5; % Standard deviation to be considered inliers
+
+color_pc_3 = ori_color;
+xyz_pc_3 = ori_loc;
+
+[~, indx_xyz_yes, indx_xyz_no] = pcdenoise(pc,'NumNeighbors',num_neighbors, 'Threshold', std_dev_thresh);
 
 color_pc_3(indx_xyz_no,:) = 0;
 %new_pc_3 = pointCloud(xyz_pc_3, 'Color' , color_pc_3);

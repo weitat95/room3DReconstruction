@@ -19,6 +19,10 @@ H = centered_1'* centered_2; % 3x3 Matrix
 [U, ~, V] = svd(H); 
 
 est_Rotation = V*U';
+if cast(det(est_Rotation), 'int32') == -1
+     V(:,3)=-V(:,3);
+     est_Rotation = V*U';
+end
 est_Translation = centroid_2' - est_Rotation*centroid_1';
 
 end

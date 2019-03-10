@@ -89,6 +89,7 @@ not_enough_points = true;
 max_inlier_counts = 0;
 non_improvement_counter = 0;
 moving_euc_thres = EUCLIDEAN_THRESH;
+size(sp_3d_1,1)
 while not_enough_points && non_improvement_counter < LIMIT_LOOP
     
 n = 15; % select 15 random points
