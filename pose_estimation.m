@@ -77,7 +77,7 @@ if clearNoise==true
     pc2 = pc2_cleared;
 end
 
-%% Ransac
+%% Ransacdo loop for i=180:-1:1
 EUCLIDEAN_THRESH = 0.001;
 INLIER_THRESH = 0.35;
 LIMIT_LOOP = 1000;
