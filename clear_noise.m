@@ -67,8 +67,8 @@ indx_xyz_no = [];
 %     end
 % end
 
-num_neighbors = 10; % number of neighbors to be inlier (not flying pixels)
-std_dev_thresh = 0.5; % Standard deviation to be considered inliers
+num_neighbors = 5; % number of neighbors to be inlier (not flying pixels)
+std_dev_thresh = 0.75; % Standard deviation to be considered inliers
 
 color_pc_3 = ori_color;
 xyz_pc_3 = ori_loc;
