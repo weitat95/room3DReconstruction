@@ -10,9 +10,9 @@ img_ori_2 = imag2d(office{2}.Color);
 
 %% Extracting frames and descriptors
 I = single(rgb2gray(img_ori_1));
-[f,d] = vl_sift(I);
+[f,d] = vl_sift(I,'PeakThresh', 10);
 I2 = single(rgb2gray(img_ori_2));
-[f2,d2] = vl_sift(I2);
+[f2,d2] = vl_sift(I2, 'PeakThresh', 10);
 
 % Visualize feature
 subplot(1,2,1);

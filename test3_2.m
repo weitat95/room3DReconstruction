@@ -11,7 +11,7 @@ Translation_array= {} ;
 Rotation_array= {} ;
 ICP_array = {} ;
 Tform_array = {} ;
-for i = 8:length(office)-1 % Reading the 40 point-clouds
+for i = 1:length(office)-1 % Reading the 40 point-clouds
     i 
     pc2 = office{i};
     pc1 = office{i+1};
@@ -55,10 +55,13 @@ for i = 8:length(office)-1 % Reading the 40 point-clouds
     ICP_array{ end+1 } = tform_grid;
     rmse
     
-    close all;
-    subplot(2,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
-    subplot(2,2,2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
-    subplot(2,2,3), pcshow(pc_icp_grid), hold on, pcshow(pc2), title('With SIFT+ICP Transformation');
-    subplot(2,2,4), pcshow(pctransform(new_pc, tform_grid)), hold on, pcshow(pc2), title('Not using the returned PC from ICP');
-    pause;
+    %close all;
+    %subplot(2,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
+    %subplot(2,2,2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
+    %subplot(2,2,3), pcshow(pc_icp_grid), hold on, pcshow(pc2), title('With SIFT+ICP Transformation');
+    %subplot(2,2,4), pcshow(pctransform(new_pc, tform_grid)), hold on, pcshow(pc2), title('Not using the returned PC from ICP');
+    %pause;
+    
+    
+    
 end

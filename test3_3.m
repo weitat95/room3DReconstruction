@@ -12,9 +12,9 @@ for i = 1: length(Tform_array)
 end
 
 gridStep = 0.01;
-[~, final_pc] = clear_noise(office{1}, false);
+[~, pc_office_1] = clear_noise(office{1}, false);
 merged_set = {};
-
+final_pc = pc_office_1;
 for i = 2:length(office) % Reading the 40 point-clouds
     i
     removeBob = false;
@@ -24,10 +24,11 @@ for i = 2:length(office) % Reading the 40 point-clouds
      
     [~, pc_cleared_noise] = clear_noise(office{i}, removeBob); 
     pc_transformed = pctransform(pc_cleared_noise, fused_transformation{i-1});
+    pc_merged = pcmerge(pc_office_1, pc_transformed, gridStep);
+    merged_set{end+1} = pc_merged;
     final_pc = pcmerge(final_pc, pc_transformed, gridStep);
-    merged_set{end+1} = final_pc;
-    close all; 
-    pcshow(final_pc);
+    %close all; 
+    %pcshow(final_pc);
 end
 close all;
 pcshow(final_pc);

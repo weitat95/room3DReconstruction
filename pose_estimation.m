@@ -6,9 +6,9 @@ img_ori_2 = imag2d(pc2.Color);
 
 %% Extracting frames and descriptors
 I1 = single(rgb2gray(img_ori_1));
-[f1,d1] = vl_sift(I1);
+[f1,d1] = vl_sift(I1, 'PeakThresh', 10);
 I2 = single(rgb2gray(img_ori_2));
-[f2,d2] = vl_sift(I2);
+[f2,d2] = vl_sift(I2, 'PeakThresh', 10);
 
 
 %% Matching
