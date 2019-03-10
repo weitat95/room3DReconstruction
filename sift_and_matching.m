@@ -5,14 +5,14 @@ office = load('data/office1.mat');
 office = office.pcl_train;
 
 
-img_ori_1 = imag2d(office{9}.Color);
-img_ori_2 = imag2d(office{10}.Color);
+img_ori_1 = imag2d(office{23}.Color);
+img_ori_2 = imag2d(office{24}.Color);
 
 %% Extracting frames and descriptors
 I = single(rgb2gray(img_ori_1));
-[f,d] = vl_sift(I,'PeakThresh', 10);
+[f,d] = vl_sift(I,'PeakThresh', 3);
 I2 = single(rgb2gray(img_ori_2));
-[f2,d2] = vl_sift(I2, 'PeakThresh', 10);
+[f2,d2] = vl_sift(I2,'PeakThresh', 3);
 
 % Visualize feature
 subplot(1,2,1);
@@ -26,7 +26,7 @@ h2 = vl_plotframe(f2);
 set(h2, 'color', 'y', 'linewidth', 3);
 
 % Basic matching
-[matches, scores] = vl_ubcmatch(d,d2,5);
+[matches, scores] = vl_ubcmatch(d,d2,10);
 
 close all;
 subplot(1,2,1);
@@ -61,7 +61,8 @@ plot(x2s+offset,y2s,'ro','MarkerSize',10);
 
 hold on;
 perm = randperm(length(x1s));
-sel = perm(1:20); % select 20 random points
+n = min([20, length(x1s)]);
+sel = perm(1:n); % select 20 random points
 for i = 1:length(sel)
     x1 = x1s(sel(i));
     y1 = y1s(sel(i));

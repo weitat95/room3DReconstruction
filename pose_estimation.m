@@ -6,13 +6,13 @@ img_ori_2 = imag2d(pc2.Color);
 
 %% Extracting frames and descriptors
 I1 = single(rgb2gray(img_ori_1));
-[f1,d1] = vl_sift(I1);%, 'PeakThresh', 7);
+[f1,d1] = vl_sift(I1, 'PeakThresh', 0);
 I2 = single(rgb2gray(img_ori_2));
-[f2,d2] = vl_sift(I2);%, 'PeakThresh', 7);
+[f2,d2] = vl_sift(I2, 'PeakThresh', 0);
 
 
 %% Matching
-[matches, scores] = vl_ubcmatch(d1,d2);%,5);
+[matches, scores] = vl_ubcmatch(d1,d2,5);
 
 %% Extract Sift Point Matches in 3D coordinates;
 xyz_1 = pc1.Location;
@@ -81,8 +81,9 @@ end
 EUCLIDEAN_THRESH = 0.001;
 INLIER_THRESH = 0.35;
 LIMIT_LOOP = 1000;
-MIN_INLIER_COUNT = 100;
+MIN_INLIER_COUNT = 50;
 MULT = 1.5;
+NUM_RANSACPOINTS = 25;
 
 last_min_error = 9999999999 ;
 not_enough_points = true;
@@ -92,7 +93,8 @@ moving_euc_thres = EUCLIDEAN_THRESH;
 size(sp_3d_1,1)
 while not_enough_points && non_improvement_counter < LIMIT_LOOP
     
-n = 25; % select 15 random points
+n =min([NUM_RANSACPOINTS, size(sp_3d_1)]); % select 15 random points
+
 perm = randperm(size(sp_3d_1,1));
 sel = perm(1:n); 
 
