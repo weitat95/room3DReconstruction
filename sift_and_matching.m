@@ -5,8 +5,8 @@ office = load('data/office1.mat');
 office = office.pcl_train;
 
 
-img_ori_1 = imag2d(office{1}.Color);
-img_ori_2 = imag2d(office{2}.Color);
+img_ori_1 = imag2d(office{9}.Color);
+img_ori_2 = imag2d(office{10}.Color);
 
 %% Extracting frames and descriptors
 I = single(rgb2gray(img_ori_1));
@@ -26,7 +26,7 @@ h2 = vl_plotframe(f2);
 set(h2, 'color', 'y', 'linewidth', 3);
 
 % Basic matching
-[matches, scores] = vl_ubcmatch(d,d2);
+[matches, scores] = vl_ubcmatch(d,d2,5);
 
 close all;
 subplot(1,2,1);

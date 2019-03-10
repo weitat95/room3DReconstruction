@@ -67,7 +67,7 @@ indx_xyz_no = [];
 %     end
 % end
 
-num_neighbors = 100; % number of neighbors to be inlier (not flying pixels)
+num_neighbors = 10; % number of neighbors to be inlier (not flying pixels)
 std_dev_thresh = 0.5; % Standard deviation to be considered inliers
 
 color_pc_3 = ori_color;
@@ -84,7 +84,7 @@ t3_mask_bin = bsxfun(@times, final_mask_bin, cast(t3_mask_bin, 'like', final_mas
 final_mask_bin=t3_mask_bin;
 %% Task 4, Edge noises
 % Hyperparameter 
-num_pixel=3; % number of pixel to remove from the edges
+num_pixel=6; % number of pixel to remove from the edges
 
 t4_mask_bin= ones(640,480);
 t4_mask_bin(1:end, 1:num_pixel) = 0;

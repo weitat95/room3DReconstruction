@@ -36,7 +36,7 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     pc2=pc2_cleared;
     
     percentage = 0.5;
-    gridStep = 0.1;
+    gridStep = 0.007;
     Random_Seed = 5;
     
     new_xyz = pc1.Location;
@@ -51,7 +51,8 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     
     pc_downsampled_grid = pcdownsample( new_pc, 'GridAverage', gridStep );
     pc2_downsampled_grid = pcdownsample( pc2, 'GridAverage', gridStep );
-    [tform_grid, pc_icp_grid, rmse] = pcregrigid( pc_downsampled_grid, pc2_downsampled_grid );
+    [tform_grid, pc_icp_grid, rmse] = pcregrigid( pc_downsampled_grid, pc2_downsampled_grid , 'MaxIterations', 1, 'InlierRatio', 0.25...
+        , 'InitialTransform' , Tform_array{end});
     ICP_array{ end+1 } = tform_grid;
     rmse
     
@@ -59,9 +60,9 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     %subplot(2,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
     %subplot(2,2,2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
     %subplot(2,2,3), pcshow(pc_icp_grid), hold on, pcshow(pc2), title('With SIFT+ICP Transformation');
-    %subplot(2,2,4), pcshow(pctransform(new_pc, tform_grid)), hold on, pcshow(pc2), title('Not using the returned PC from ICP');
+    %subplot(2,2,4), pcshow(pctransform(pc1, tform_grid)), hold on, pcshow(pc2), title('Not using the returned PC from ICP');
     %pause;
     
-    
+     
     
 end

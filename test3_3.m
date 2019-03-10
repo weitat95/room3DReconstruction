@@ -5,17 +5,17 @@ fused_transformation = {};
 for i = 1: length(Tform_array)
     i
     frame_transformation = 1;
-    for j = 1:i
+    for j = i:-1:1
         frame_transformation = frame_transformation * Tform_array{j}.T;
     end
     fused_transformation{end+1} = affine3d(frame_transformation);
 end
 
-gridStep = 0.01;
+gridStep = 0.001;
 [~, pc_office_1] = clear_noise(office{1}, false);
 merged_set = {};
 final_pc = pc_office_1;
-for i = 2:length(office) % Reading the 40 point-clouds
+for i = 2:length(fused_transformation)+1 % Reading the 40 point-clouds
     i
     removeBob = false;
     if i == 27
@@ -29,6 +29,7 @@ for i = 2:length(office) % Reading the 40 point-clouds
     final_pc = pcmerge(final_pc, pc_transformed, gridStep);
     %close all; 
     %pcshow(final_pc);
+    
 end
 close all;
 pcshow(final_pc);
@@ -64,10 +65,25 @@ pcshow(final_pc);
 
 
 for i = 1:length(merged_set)
+    i
     close all;
+    
     pcshow(merged_set{i});
     pause;
 end
-
-
-
+% 
+% [~,pc_1_denoised ]= clear_noise(office{1}, false);
+% for i = 1:length(Tform_array)
+%     i 
+%     [~,pc_denoised ]= clear_noise(office{i+1}, false);
+%     frame_transformation = 1;
+%     for j = i:-1:1
+%         j
+%         frame_transformation = frame_transformation * Tform_array{j}.T;
+%         pc_t = pctransform(pc_denoised, affine3d(frame_transformation));
+%         close all;
+%         subplot(1,2,1), pcshow(pc_1_denoised), hold on, pcshow(pc_denoised);
+%         subplot(1,2,2), pcshow(pc_1_denoised), hold on, pcshow(pc_t);
+%         pause;
+%     end
+% end
