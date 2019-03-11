@@ -12,7 +12,7 @@ I2 = single(rgb2gray(img_ori_2));
 
 
 %% Matching
-[matches, scores] = vl_ubcmatch(d1,d2,5);
+[matches, scores] = vl_ubcmatch(d1,d2,2.5);
 
 %% Extract Sift Point Matches in 3D coordinates;
 xyz_1 = pc1.Location;
@@ -77,19 +77,21 @@ if clearNoise==true
     pc2 = pc2_cleared;
 end
 
-%% Ransacdo loop for i=180:-1:1
-EUCLIDEAN_THRESH = 0.001;
-INLIER_THRESH = 0.35;
-LIMIT_LOOP = 1000;
+%% Ransac
+EUCLIDEAN_THRESH = 0.01;
+INLIER_THRESH = 0.8;
+LIMIT_LOOP = 10000;
 MIN_INLIER_COUNT = 50;
-MULT = 1.5;
+EUCL_MULT = 1.5;
 NUM_RANSACPOINTS = 25;
+INLIERCOUNT_MULT = 0.9;
 
 last_min_error = 9999999999 ;
 not_enough_points = true;
 max_inlier_counts = 0;
 non_improvement_counter = 0;
 moving_euc_thres = EUCLIDEAN_THRESH;
+moving_min_inlier_count = MIN_INLIER_COUNT;
 size(sp_3d_1,1)
 while not_enough_points && non_improvement_counter < LIMIT_LOOP
     
@@ -134,7 +136,7 @@ if inlier_count > max_inlier_counts
     max_inlier_counts = inlier_count;
     best_inlier_index = inlier_index;
     non_improvement_counter = 1;
-    max_inlier_counts
+    %max_inlier_counts
 end
 %     if (error < last_min_error - threshold) 
 %         improvement_since=0;
@@ -147,14 +149,19 @@ end
 %     end
 non_improvement_counter = non_improvement_counter + 1;
 %non_improvement_counter
-if non_improvement_counter >= LIMIT_LOOP && max_inlier_counts < MIN_INLIER_COUNT
-    moving_euc_thres = moving_euc_thres*MULT;
+if non_improvement_counter >= LIMIT_LOOP && max_inlier_counts < moving_min_inlier_count
+    %moving_euc_thres = moving_euc_thres*EUCL_MULT;
     not_enough_points = true;
     max_inlier_counts = 0;
     non_improvement_counter = 0;
-    moving_euc_thres
+    moving_min_inlier_count = moving_min_inlier_count*INLIERCOUNT_MULT;
+    inlier_count=0;
+
+    moving_min_inlier_count
+    %moving_euc_thres
 end
 end
+max_inlier_counts
 last_min_error = error;
 
 % Best Pose Estimation using all inlier points

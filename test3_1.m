@@ -6,7 +6,7 @@ office = office.pcl_train;
 % office = load('office2.mat');
 % office = office.pcl_test;
 close all;
-for i = 1:length(office) % Reading the 40 point-clouds
+for i = 27:length(office) % Reading the 40 point-clouds
     pc = office{i};
     if i==27
         final_bin_mask = clear_noise(pc, true);

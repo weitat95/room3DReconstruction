@@ -34,10 +34,21 @@ final_mask_bin=t1_mask_bin;
 % Using a hardcoded boundary box to remove Bob
 if removeBob%i==27
     %close all;
-    obs_mask = ones(640,480);
-    obs_mask(83:322,1:480,:)=0;
-
-    t2_mask_bin = bsxfun(@times, final_mask_bin, cast(obs_mask, 'like', final_mask_bin));
+    % HEAD
+    % X- (192,270)
+    % Y- (1, 85)
+    % Body
+    % X- (83,322)
+    % Y- (85, 480)
+    obs_head = ones(640,480);
+    obs_head(192:270,1:85,:)=0;
+    obs_body = ones(640,480);
+    obs_body(83:322, 85:480)=0;     
+%     obs_mask = ones(640,480);
+%     obs_mask(83:322,1:480,:)=0;
+    t2_mask_bin = bsxfun(@times, final_mask_bin, cast(obs_head, 'like', final_mask_bin));
+    t2_mask_bin = bsxfun(@times, t2_mask_bin, cast(obs_body, 'like', t2_mask_bin));
+    %t2_mask_bin = bsxfun(@times, final_mask_bin, cast(obs_mask, 'like', final_mask_bin));
     indx_xyz_no = find(t2_mask_bin==0);
     color_pc_2 = ori_color;
     xyz_pc_2 = ori_loc;

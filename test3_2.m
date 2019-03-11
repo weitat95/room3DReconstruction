@@ -36,7 +36,7 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     pc2=pc2_cleared;
     
     percentage = 0.5;
-    gridStep = 0.007;
+    gridStep = 0.001;
     Random_Seed = 5;
     
     new_xyz = pc1.Location;
