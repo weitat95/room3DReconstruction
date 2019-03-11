@@ -11,7 +11,7 @@ for i = 1: length(Tform_array)
     fused_transformation{end+1} = affine3d(frame_transformation);
 end
 
-gridStep = 0.00001;
+gridStep = 0.01;
 [~, pc_office_1] = clear_noise(office{1}, false);
 merged_set = {};
 final_pc = pc_office_1;
