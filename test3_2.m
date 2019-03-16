@@ -15,13 +15,12 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     i 
     pc2 = office{i};
     pc1 = office{i+1};
-    removeBob = false;
-    if i ==27
-        removeBob = true;
-    end
-    [~, pc1_cleared] = clear_noise(pc1, removeBob);
-    [~, pc2_cleared] = clear_noise(pc2, removeBob);
-    [best_est_Translation, best_est_Rotation, error] = pose_estimation(pc1, pc2, true, removeBob);
+    removeBob1 = i+1==27;
+    [~, pc1_cleared] = clear_noise(pc1, removeBob1);
+    removeBob2 = i ==27;
+
+    [~, pc2_cleared] = clear_noise(pc2, removeBob2);
+    [best_est_Translation, best_est_Rotation, error] = pose_estimation(pc1, pc2, true, [removeBob1,removeBob2]);
     det(best_est_Rotation)
     if(det(best_est_Rotation)==-1)
         pause
@@ -49,19 +48,17 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     %display('Random');
     %rmse
     
-    pc_downsampled_grid = pcdownsample( new_pc, 'GridAverage', gridStep );
-    pc2_downsampled_grid = pcdownsample( pc2, 'GridAverage', gridStep );
-    [tform_grid, pc_icp_grid, rmse] = pcregrigid( pc_downsampled_grid, pc2_downsampled_grid , 'MaxIterations', 1, 'InlierRatio', 0.25...
-        , 'InitialTransform' , Tform_array{end});
-    ICP_array{ end+1 } = tform_grid;
+    %pc_downsampled_grid = pcdownsample( new_pc, 'GridAverage', gridStep );
+    %pc2_downsampled_grid = pcdownsample( pc2, 'GridAverage', gridStep );
+    %[tform_grid, pc_icp_grid, rmse] = pcregrigid( pc_downsampled_grid, pc2_downsampled_grid , 'MaxIterations', 1, 'InlierRatio', 0.25...
+    %    , 'InitialTransform' , Tform_array{end});
+    %ICP_array{ end+1 } = tform_grid;
     rmse
     
-    %close all;
-    %subplot(2,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
-    %subplot(2,2,2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
-    %subplot(2,2,3), pcshow(pc_icp_grid), hold on, pcshow(pc2), title('With SIFT+ICP Transformation');
-    %subplot(2,2,4), pcshow(pctransform(pc1, tform_grid)), hold on, pcshow(pc2), title('Not using the returned PC from ICP');
-    %pause;
+     close all;
+    % subplot(1,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
+    % subplot(1,2,2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
+    %  pause;
     
      
     

@@ -1,25 +1,25 @@
 %% Using pcfitplane
 MAXANGULARDIST = 5;
-MAXDISTANCE = 0.5;
-PLANE_M_NORMAL = [0.9099, 0.1237, 0.3960];
-PLANE_R_NORMAL = [0.4990, 0.1896, -0.8456];
-PLANE_L_NORMAL = [-0.5939, 0.0031, 0.8046];
-PLANE_CEI_NORMAL = [-0.0379, -0.9581, -0.2839];
+MAXDISTANCE = 0.3;
+%PLANE_M_NORMAL = [0.9099, 0.1237, 0.3960];
+%PLANE_R_NORMAL = [0.4990, 0.1896, -0.8456];
+%PLANE_L_NORMAL = [-0.5939, 0.0031, 0.8046];
+%PLANE_CEI_NORMAL = [-0.0379, -0.9581, -0.2839];
 
 CENTROID_R = [1.27401, -0.312675, -0.565];
 CENTROID_L = [0.084, -0.3772, 2.458];
 %referenceVector = [0,0,1];
 
 
-[model1,inlierIndices,outlierIndices] = pcfitplane(final_pc, MAXDISTANCE, PLANE_M_NORMAL);
+[model1,inlierIndices,outlierIndices] = pcfitplane(final_pc, MAXDISTANCE);%, PLANE_M_NORMAL);
 plane1 = select(final_pc,inlierIndices);
 remainPtCloud = select(final_pc,outlierIndices);
 
-[model2,inlierIndices2,outlierIndeces2] = pcfitplane(remainPtCloud, MAXDISTANCE, PLANE_R_NORMAL);
+[model2,inlierIndices2,outlierIndeces2] = pcfitplane(remainPtCloud, MAXDISTANCE);%, PLANE_R_NORMAL);
 plane2 = select(remainPtCloud,inlierIndices2);
 remainPtCloud2 = select(remainPtCloud,outlierIndeces2);
 
-[model3,inlierIndices3,outlierIndeces3] = pcfitplane(remainPtCloud2, MAXDISTANCE, PLANE_L_NORMAL);
+[model3,inlierIndices3,outlierIndeces3] = pcfitplane(remainPtCloud2, MAXDISTANCE);%, PLANE_L_NORMAL);
 plane3 = select(remainPtCloud2,inlierIndices3);
 remainPtCloud3 = select(remainPtCloud2,outlierIndeces3);
 
