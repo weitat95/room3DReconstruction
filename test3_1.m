@@ -7,7 +7,7 @@ office = office.pcl_train;
 % office = office.pcl_test;
 close all;
 
-taskname='figure/task3_1/4';
+taskname='figure/NAN';
 for i = 28:length(office) % Reading the 40 point-clouds
     pc = office{i};
     i
