@@ -1,5 +1,5 @@
-run('../vlfeat-0.9.21/toolbox/vl_setup.m');
-%run('vlfeat-0.9.19/toolbox/vl_setup.m');
+%run('../vlfeat-0.9.21/toolbox/vl_setup.m');
+run('vlfeat-0.9.19/toolbox/vl_setup.m');
 
 
 %% Ransac
@@ -53,7 +53,7 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     %[tform_grid, pc_icp_grid, rmse] = pcregrigid( pc_downsampled_grid, pc2_downsampled_grid , 'MaxIterations', 1, 'InlierRatio', 0.25...
     %    , 'InitialTransform' , Tform_array{end});
     %ICP_array{ end+1 } = tform_grid;
-    rmse
+    %rmse
     
      close all;
     % subplot(1,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
