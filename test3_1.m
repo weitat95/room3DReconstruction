@@ -25,7 +25,7 @@ for i = 28:length(office) % Reading the 40 point-clouds
     %subplot(1,2,1),
     before_rgb = imag2d(pc.Color);
     imshow(before_rgb);
-    savefig(f1, [taskname, '_original_2d']);
+    %savefig(f1, [taskname, '_original_2d']);
     %title('Original_2d');
     % Plot Masked 2d
     indx_xyz_no = find(final_bin_mask==0);
@@ -37,7 +37,7 @@ for i = 28:length(office) % Reading the 40 point-clouds
     %subplot(1,2,2),
     f2 = figure(2);
     imshow(imag2d(new_pc.Color));
-    savefig(f2,[taskname, '_masked_2d']);
+    %savefig(f2,[taskname, '_masked_2d']);
     %title('Masked 2d');
 
     % Plot Original Pc
@@ -47,7 +47,7 @@ for i = 28:length(office) % Reading the 40 point-clouds
     xlabel('X');
     ylabel('Y');
     zlabel('Z');
-    savefig(f3,[taskname, '_ori_pc']);
+    %savefig(f3,[taskname, '_ori_pc']);
     %title('Original PC');
     
     % Plot Removed Pc
@@ -60,8 +60,8 @@ for i = 28:length(office) % Reading the 40 point-clouds
     xlabel('X');
     ylabel('Y');
     zlabel('Z');
-    savefig(f4,[taskname, '_cleaned_pc']);
+    %savefig(f4,[taskname, '_cleaned_pc']);
     %title('Cleaned PC');
     
-    pause
+    %pause
 end
