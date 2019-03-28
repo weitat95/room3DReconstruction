@@ -8,7 +8,7 @@ office = office.pcl_train;
 close all;
 
 taskname='figure/NAN';
-for i = 28:length(office) % Reading the 40 point-clouds
+for i = 20:length(office) % Reading the 40 point-clouds
     pc = office{i};
     i
     if i==27
@@ -63,5 +63,5 @@ for i = 28:length(office) % Reading the 40 point-clouds
     %savefig(f4,[taskname, '_cleaned_pc']);
     %title('Cleaned PC');
     
-    %pause
+    pause
 end

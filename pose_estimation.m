@@ -34,8 +34,8 @@ if clearNoise==true
     [bin_mask_1, pc1_cleared] = clear_noise(pc1, removeBob(1));
     [bin_mask_2, pc2_cleared] = clear_noise(pc2, removeBob(2));
 
-    [r1,c1] = find(bin_mask_1==0);
-    [r2,c2] = find(bin_mask_2==0);
+    [r1,c1] = find(bin_mask_1'==0);
+    [r2,c2] = find(bin_mask_2'==0);
     counter=0;
     for i=1:length(xy_1)
 
@@ -57,7 +57,8 @@ if clearNoise==true
     xy_2(xy_2(:,1)==-1,:) = [];
 
 end
-
+length(xy_1)
+length(xy_2)
 %% Convert siftpoints matches to 3d 
 xyz_1 = pc1.Location;
 xyz_2 = pc2.Location;

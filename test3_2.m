@@ -1,5 +1,5 @@
-%run('../vlfeat-0.9.21/toolbox/vl_setup.m');
-run('vlfeat-0.9.19/toolbox/vl_setup.m');
+run('../vlfeat-0.9.21/toolbox/vl_setup.m');
+%run('vlfeat-0.9.19/toolbox/vl_setup.m');
 
 
 %% Ransac
@@ -11,7 +11,7 @@ Translation_array= {} ;
 Rotation_array= {} ;
 ICP_array = {} ;
 Tform_array = {} ;
-for i = 1:length(office)-1 % Reading the 40 point-clouds
+for i = 26:length(office)-1 % Reading the 40 point-clouds
     i 
     pc2 = office{i};
     pc1 = office{i+1};
@@ -22,9 +22,7 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     [~, pc2_cleared] = clear_noise(pc2, removeBob2);
     [best_est_Translation, best_est_Rotation, error] = pose_estimation(pc1, pc2, true, [removeBob1,removeBob2]);
     det(best_est_Rotation)
-    if(det(best_est_Rotation)==-1)
-        pause
-    end
+
     Translation_array{end+1} = best_est_Translation;
     Rotation_array{end+1} = best_est_Rotation;
     Tform_array{end+1} = affine3d(horzcat(horzcat(best_est_Rotation, best_est_Translation)',[0 ;0 ;0 ;1]));
@@ -55,11 +53,22 @@ for i = 1:length(office)-1 % Reading the 40 point-clouds
     %ICP_array{ end+1 } = tform_grid;
     %rmse
     
-     close all;
-    % subplot(1,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
-    % subplot(1,2,2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
-    %  pause;
-    
-     
+%      close all;
+%      subplot(1,2,1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
+%      subplot(1,2,2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
+%       pause;
+%      close all;
+%      figure(1), pcshow(pc1), hold on, pcshow(pc2), title('Without any transformation');
+%      figure(2), pcshow(new_pc), hold on, pcshow(pc2), title('With SIFT Transformation');
+%       pause;
+%      
+%       
+%       close all;
+%       figure(1);
+%       pcshowpair(pc1,pc2);
+%       figure(2);
+%       pcshowpair(new_pc, pc2);
+%       pause
+
     
 end

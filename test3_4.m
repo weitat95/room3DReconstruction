@@ -67,12 +67,12 @@ PLANE_R_NORMAL = model1.Normal;
 PLANE_M_NORMAL = model2.Normal;
 PLANE_L_NORMAL = model3.Normal;
 
-angle_right = acos(PLANE_M_NORMAL * PLANE_R_NORMAL')*180/pi;
-angle_left = acos(PLANE_M_NORMAL * PLANE_L_NORMAL')*180/pi;
+angle_right = acos(PLANE_M_NORMAL * PLANE_R_NORMAL')*180/pi
+angle_left = acos(PLANE_M_NORMAL * PLANE_L_NORMAL')*180/pi
 
 % How wide is the office????
 % They are not quite parallel. 
 % They are approximately 310 cm at the end with the windows and 320 at the door end (which you do not see)
-dist_R_L = min(sqrt(sum((plane1.Location-mean(plane3.Location)).^2,2)));
+dist_R_L = min(sqrt(sum((plane1.Location-mean(plane3.Location)).^2,2)))
 
-DIST_COM = sqrt(sum((CENTROID_L-CENTROID_R).^2,2));
+DIST_COM = sqrt(sum((CENTROID_L-CENTROID_R).^2,2))

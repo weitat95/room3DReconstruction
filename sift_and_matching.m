@@ -4,7 +4,7 @@
 office = load('data/office1.mat');
 office = office.pcl_train;
 
-for j=15:length(office)-1
+for j=24:length(office)-1
      
     
 j
@@ -19,9 +19,9 @@ removeBob = j+1==27;
 [bin_mask_2, pc2_cleared] = clear_noise(office{j+1}, removeBob);
 %% Extracting frames and descriptors
 I = single(rgb2gray(img_ori_1));
-[f,d] = vl_sift(I,'PeakThresh', 3);
+[f,d] = vl_sift(I,'PeakThresh', 0);
 I2 = single(rgb2gray(img_ori_2));
-[f2,d2] = vl_sift(I2,'PeakThresh', 3);
+[f2,d2] = vl_sift(I2,'PeakThresh', 0);
 
 % Visualize feature
 subplot(1,2,1);
@@ -35,7 +35,7 @@ h2 = vl_plotframe(f2);
 set(h2, 'color', 'y', 'linewidth', 3);
 
 % Basic matching
-[matches, scores] = vl_ubcmatch(d,d2,10);
+[matches, scores] = vl_ubcmatch(d,d2,2.5);
 
 % close all;
 % subplot(1,2,1);
@@ -95,7 +95,7 @@ plot(x2s+offset,y2s,'go','MarkerSize',10);
 
 hold on;
 perm = randperm(length(x1s));
-n = min([20, length(x1s)]);
+n = min([length(x1s)]);
 sel = perm(1:n); % select 20 random points
 for i = 1:length(sel)
     x1 = x1s(sel(i));
