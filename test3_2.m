@@ -1,5 +1,5 @@
-run('../vlfeat-0.9.21/toolbox/vl_setup.m');
-%run('vlfeat-0.9.19/toolbox/vl_setup.m');
+%run('../vlfeat-0.9.21/toolbox/vl_setup.m');
+run('vlfeat-0.9.19/toolbox/vl_setup.m');
 
 
 %% Ransac
@@ -11,7 +11,7 @@ Translation_array= {} ;
 Rotation_array= {} ;
 ICP_array = {} ;
 Tform_array = {} ;
-for i = 26:length(office)-1 % Reading the 40 point-clouds
+for i = 1:length(office)-1 % Reading the 40 point-clouds
     i 
     pc2 = office{i};
     pc1 = office{i+1};
