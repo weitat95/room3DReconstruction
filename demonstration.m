@@ -26,7 +26,7 @@ removeBob2 = j+1==27;
 [bin_mask_2, pc2_cleared] = clear_noise(pc2, removeBob);
 
 %% Visualise Original/Masked image and point cloud
-close all;
+%close all;
 
 figure(1);
 
@@ -36,8 +36,10 @@ title(sprintf('Original 2D Color Image (%dth Frame)',j));
 
 subplot(2,2,2),
 indx_xyz_no_1 = find(bin_mask_1==0);
+indx_xyz_yes_1 = find(bin_mask_1~=0);
 cleared_pc1_color = pc1.Color;
 cleared_pc1_color(indx_xyz_no_1, :) = 0;
+cleared_pc1_color(indx_xyz_yes_1, :) = 255;
 cleared_pc1 = pointCloud(pc1.Location, 'Color', cleared_pc1_color);
 imshow(imag2d(cleared_pc1.Color));
 title(sprintf('Masked 2D Image (%dth Frame)',j));
@@ -51,6 +53,7 @@ title(sprintf('Orignal PC (%dth Frame)',j));
 
 subplot(2,2,4),
 cleared_pc1_loc = pc1.Location;
+cleared_pc1_color = pc1.Color;;
 cleared_pc1_color(indx_xyz_no_1, :) = [];
 cleared_pc1_loc(indx_xyz_no_1, :) = [];
 cleared_pc1 = pointCloud(cleared_pc1_loc, 'Color', cleared_pc1_color);
@@ -58,7 +61,7 @@ pcshow(cleared_pc1);
 xlabel('X');
 ylabel('Y');
 zlabel('Z');
-title(sprintf('Cleared PC (%dth Frame)',j));
+title(sprintf('Cleaned PC (%dth Frame)',j));
 
 figure(2);
 
@@ -68,7 +71,9 @@ title(sprintf('Original 2D Color Image (%dth Frame)',j+1));
 
 subplot(2,2,2),
 indx_xyz_no_2 = find(bin_mask_2==0);
+indx_xyz_yes_2 = find(bin_mask_2~=0);
 cleared_pc2_color = pc2.Color;
+cleared_pc2_color(indx_xyz_yes_2, :) = 255;
 cleared_pc2_color(indx_xyz_no_2, :) = 0;
 cleared_pc2 = pointCloud(pc2.Location, 'Color', cleared_pc2_color);
 imshow(imag2d(cleared_pc2.Color));
@@ -83,6 +88,7 @@ title(sprintf('Orignal PC (%dth Frame)',j+1));
 
 subplot(2,2,4),
 cleared_pc2_loc = pc2.Location;
+cleared_pc2_color = pc2.Color;
 cleared_pc2_color(indx_xyz_no_2, :) = [];
 cleared_pc2_loc(indx_xyz_no_2, :) = [];
 cleared_pc2 = pointCloud(cleared_pc2_loc, 'Color', cleared_pc2_color);
@@ -90,7 +96,7 @@ pcshow(cleared_pc2);
 xlabel('X');
 ylabel('Y');
 zlabel('Z');
-title(sprintf('Cleared PC (%dth Frame)',j+1));
+title(sprintf('Cleaned PC (%dth Frame)',j+1));
 
 
 %% Extracting frames and descriptors
@@ -249,5 +255,5 @@ subplot(1,2,2),
 pcshowpair(pc1_cleared,new_pc);
 title(sprintf('After registering (using %d pairs of matched points)',sum(best_inlier_index)));
 
-pause
+%pause
 end
