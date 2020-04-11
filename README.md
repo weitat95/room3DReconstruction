@@ -12,16 +12,16 @@ The original RGB or XYZ images are 480 rows by 640 columns by 3 channels but are
 
 ---
 Image from the left: The image at frame 12, point clouds extracted.
-![](https://github.com/weitat95/advisioncw1819/blob/master/images/img1.png)
+![](https://github.com/weitat95/room3DReconstruction/blob/master/images/img1.png)
 
 ---
 Matching of SIFT descriptors with matched points in green and unmatched points in red.
-![](https://github.com/weitat95/advisioncw1819/blob/master/images/img2.png)
+![](https://github.com/weitat95/room3DReconstruction/blob/master/images/img2.png)
 
 ---
 A complete point cloud model after merging 40 frames.
-![](https://github.com/weitat95/advisioncw1819/blob/master/images/img3.png)
+![](https://github.com/weitat95/room3DReconstruction/blob/master/images/img3.png)
 
 Left, front and right wall extraction from the room.
-![](https://github.com/weitat95/advisioncw1819/blob/master/images/img4.png)
+![](https://github.com/weitat95/room3DReconstruction/blob/master/images/img4.png)
 
